@@ -1,0 +1,33 @@
+{% extends "./layout.html" %}
+
+{% block 'main' %}
+
+<div>
+    <p class="font-serif my-10 text-5xl text-center">{{time.date}}, {{time.time}}</p>
+
+    <table class="bg-white border-collapse w-full">
+        <tr>
+            <td class="border px-8 py-4">Timezone</td>
+            <td class="border px-8 py-4">{{time.timeZone}}</td>
+        </tr>
+        <tr>
+            <td class="border px-8 py-4">Coordinate (lat/lon)</td>
+            <td class="border px-8 py-4">{{location.lat}} / {{location.lon}}</td>
+        </tr>
+        <tr>
+            <td class="border px-8 py-4">Full Datetime</td>
+            <td class="border px-8 py-4">{{time.dateTime}}</td>
+        </tr>
+        <tr>
+            <td class="border px-8 py-4">Full Address</td>
+            <td class="border px-8 py-4">{{location.display_name}}</td>
+        </tr>
+    </table>
+
+    <p class="my-10 text--400 text-2xl text-center">
+      <a href="/" class="button inline-flex items-center px-4 py-2 border-2
+        border-indigo-500 bg-indigo-500 hover:bg-indigo-600 text-white
+        text-md rounded-md">Go Home</a>
+    </p>
+</div>
+{% endblock %}

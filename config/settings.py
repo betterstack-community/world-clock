@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import logging.config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
@@ -48,7 +47,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "apps.world_clock.middleware.LoggingMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -123,63 +121,3 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-LOGGING_CONFIG = None
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    # Setup a formatter for handlers
-    "formatters": {
-        "json": {
-            "()": "pythonjsonlogger.jsonlogger.JsonFormatter",
-            "format": "%(name)s %(asctime)s %(levelname)s %(filename)s %(lineno)s %(process)d %(message)s",
-            "rename_fields": {"levelname": "severity", "asctime": "timestamp"},
-        },
-        "plaintext": {
-            "format": "%(name)s: %(asctime)s | %(levelname)s | %(filename)s:%(lineno)s | %(process)d >>> %(message)s"
-        },
-    },
-    # All handlers go here
-    "handlers": {
-        # Create a basic console handler
-        "console": {
-            # Define class of handler
-            "class": "logging.StreamHandler",
-            # Add formatter to handler
-            "formatter": "json",
-        },
-        "default": {
-            # Define class of handler
-            "level": "ERROR",
-            "class": "logging.StreamHandler",
-        },
-    },
-    # Define custom loggers that you will reference within the project through logging.getLogger
-    "loggers": {
-        "django.db.backends": {
-            "handlers": ["console"],
-            "level": "ERROR",
-        },
-        "django.utils.autoreload": {
-            "handlers": ["console"],
-            "level": "ERROR",
-        },
-        "django.server": {
-            "handlers": ["console"],
-            "level": "ERROR",
-        },
-        "": {
-            # Set handlers to console defined above
-            "handlers": ["console"],
-            # Log INFO messages and above
-            "level": "DEBUG",
-        },
-    },
-}
-
-# Disable requests library built-in logging
-logging.getLogger("requests").setLevel(logging.ERROR)
-
-# Implement our own logging system
-logging.config.dictConfig(LOGGING)
